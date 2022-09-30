@@ -17,3 +17,9 @@ def user_login(request: HttpRequest) -> HttpResponse:
             return redirect("login")
     else:
         return render(request, "registration/login.html", {})
+
+
+def user_logout(request: HttpRequest) -> HttpResponse:
+    logout(request)
+    messages.success(request, "Logged out")
+    return redirect('home')

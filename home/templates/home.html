@@ -2,5 +2,9 @@
 <head> </head>
 <body>
     <h1>Home</h1>
-    <a href="users/user_login">Login thingy</a>
+    {% if user.is_authenticated %}
+        <a href="users/user_logout">Logout thingy</a>
+    {% else %}
+        <a href="users/user_login">Login thingy</a>
+    {% endif %}
 </body>
