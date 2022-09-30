@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        form.login {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+    <form class="login" method="POST">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="usr" />
+        <label for="username">Password:</label>
+        <input type="text" name="pwd" />
+        <input type="submit" value="Login" />
+    </form>
+</body>
