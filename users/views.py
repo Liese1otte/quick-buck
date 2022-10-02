@@ -12,7 +12,7 @@ def user_login(request: HttpRequest) -> HttpResponse:
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("/")
+            return redirect("/posts")
         else:
             messages.success(request, ("Login error, retry."))
             return redirect("login")

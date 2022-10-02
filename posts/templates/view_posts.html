@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<head> </head>
+<body>
+    <h1>Posts</h1>
+    <ul>
+        {% for post in object_list %}
+            <li>
+            {{ post.teacher }} / {{ post.student }}<br />
+            {{ post.lesson_name }} ({{ post.lesson_type }})<br />
+            {{ post.lesson_time }}<br />
+            <a href="{% url 'DetailedPostView' post.pk %}">Jump to post</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>

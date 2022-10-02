@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<head></head>
+<body>
+    <h1>Post</h1>
+    <h2> {{ post.lesson_name }} </h2>
+    <p>
+        {{ post.lesson_type }}<br />
+        {{ post.teacher }} / {{ post.student }}<br />
+        {{ post.lesson_time }}<br />
+        {{ post.payment_status }}
+    </p>
+    <a href="{% url 'PostsView' %}">Back</a>
+</body>
