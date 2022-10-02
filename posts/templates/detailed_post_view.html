@@ -3,6 +3,7 @@
 <body>
     <h1>Post</h1>
     <a href="{% url 'EditPostView' post.pk %}">Edit</a>
+    <a href="{% url 'DeletePostView' post.pk %}">Delete</a>
     <h2> {{ post.lesson_name }} </h2>
     <p>
         {{ post.lesson_type }}<br />

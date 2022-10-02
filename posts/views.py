@@ -1,6 +1,13 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+)
 from .models import PostModel
+from django.urls import reverse_lazy
 
 
 class PostsView(ListView):
@@ -24,3 +31,10 @@ class EditPostView(UpdateView):
     model = PostModel
     template_name = "edit_post_view.html"
     fields = "__all__"
+
+
+class DeletePostView(DeleteView):
+    model = PostModel
+    context_object_name = "post"
+    template_name = "delete_post_view.html"
+    success_url = reverse_lazy("PostsView")

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<head></head>
+<body>
+    <h1>Delete post</h1>
+    <h3>
+        Delete: {{ post.lesson_name }} | {{ post.teacher }} / {{ post.student }}
+    </h3>
+    <form method="POST">
+        {% csrf_token %}
+        <button>Delete</button>
+    </form>
+</body>
