@@ -2,9 +2,11 @@
 <head></head>
 <body>
     <h1>Post</h1>
-    <a href="{% url 'EditPostView' post.pk %}">Edit</a>
-    <a href="{% url 'DeletePostView' post.pk %}">Delete</a>
-    <h2> {{ post.lesson_name }} </h2>
+    {% if user.id == post.teacher.id %}
+        <a href="{% url 'EditPostView' post.pk %}">Edit</a>
+        <a href="{% url 'DeletePostView' post.pk %}">Delete</a>
+    {% endif %}
+    <h2>{{ post.lesson_name }}</h2>
     <p>
         {{ post.lesson_type }}<br />
         {{ post.teacher }} / {{ post.student }}<br />

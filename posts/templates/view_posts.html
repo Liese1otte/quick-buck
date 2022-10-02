@@ -6,12 +6,14 @@
     <a href="{% url 'home' %}">Back</a>
     <ul>
         {% for post in object_list %}
-            <li>
-            {{ post.teacher }} / {{ post.student }}<br />
-            {{ post.lesson_name }} ({{ post.lesson_type }})<br />
-            {{ post.lesson_time }}<br />
-            <a href="{% url 'DetailedPostView' post.pk %}">Jump to post</a>
-            </li>
+            {% if user.id == post.teacher.id or user.id == post.student.id %}
+                <li>
+                {{ post.teacher }} / {{ post.student }}<br />
+                {{ post.lesson_name }} ({{ post.lesson_type }})<br />
+                {{ post.lesson_time }}<br />
+                <a href="{% url 'DetailedPostView' post.pk %}">Jump to post</a>
+                </li>
+            {% endif %}
         {% endfor %}
     </ul>
 </body>
