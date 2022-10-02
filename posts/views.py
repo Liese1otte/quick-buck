@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import PostModel
 
 
@@ -17,4 +17,10 @@ class DetailedPostView(DetailView):
 class AddPostView(CreateView):
     model = PostModel
     template_name = "add_post_view.html"
+    fields = "__all__"
+
+
+class EditPostView(UpdateView):
+    model = PostModel
+    template_name = "edit_post_view.html"
     fields = "__all__"

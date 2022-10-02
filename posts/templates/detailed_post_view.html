@@ -2,6 +2,7 @@
 <head></head>
 <body>
     <h1>Post</h1>
+    <a href="{% url 'EditPostView' post.pk %}">Edit</a>
     <h2> {{ post.lesson_name }} </h2>
     <p>
         {{ post.lesson_type }}<br />
