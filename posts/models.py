@@ -1,22 +1,23 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from server import settings
 
 
 DAYS_OF_WEEK = (
-    (0, 'Monday'),
-    (1, 'Tuesday'),
-    (2, 'Wednesday'),
-    (3, 'Thursday'),
-    (4, 'Friday'),
-    (5, 'Saturday'),
-    (6, 'Sunday'),
+    ("0", 'Monday'),
+    ("1", 'Tuesday'),
+    ("2", 'Wednesday'),
+    ("3", 'Thursday'),
+    ("4", 'Friday'),
+    ("5", 'Saturday'),
+    ("6", 'Sunday'),
 )
 
 
 class PostModel(models.Model):
-    teacher = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Teacher")
-    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Student")
+    teacher = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="Teacher")
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="Student")
     lesson_type = models.CharField(max_length=255)
     lesson_name = models.CharField(max_length=255)
     lesson_week = models.CharField(max_length=1, choices=DAYS_OF_WEEK)

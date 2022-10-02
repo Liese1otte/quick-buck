@@ -2,7 +2,9 @@
 <head> </head>
 <body>
     <h1>Posts</h1>
-    <a href="{% url 'AddPostView' %}">New Post</a>
+    {% if user.user_type == "0" %}
+        <a href="{% url 'AddPostView' %}">New Post</a>
+    {% endif %}
     <a href="{% url 'home' %}">Back</a>
     <ul>
         {% for post in object_list %}
