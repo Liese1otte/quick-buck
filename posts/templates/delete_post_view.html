@@ -3,7 +3,10 @@
 <body>
     <h1>Delete post</h1>
     <h3>
-        Delete: {{ post.lesson_name }} | {{ post.teacher }} / {{ post.student }}
+        Delete: {{ post.lesson_name }} | {{ post.teacher }} / 
+        {% for student in post.students.all %}
+            {{ student }},
+        {% endfor %}
     </h3>
     <form method="POST">
         {% csrf_token %}

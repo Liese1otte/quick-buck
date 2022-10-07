@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head> </head>
 <body>
+    {{ post.students.all }}
     <h1>Posts</h1>
     {% if user.user_type == "0" %}
         <a href="{% url 'AddPostView' %}">New Post</a>
@@ -8,10 +9,15 @@
     <a href="{% url 'home' %}">Back</a>
     <ul>
         {% for post in object_list %}
-            {% if user.id == post.teacher.id or user.id == post.student.id %}
+            {% if user.id == post.teacher.id or user in post.students.all %}
                 <li>
-                {{ post.teacher }} / {{ post.student }}<br />
+                {{ post.teacher }} / 
+                {% for student in post.students.all %}
+                    {{ student }},
+                {% endfor %}
+                <br />
                 {{ post.lesson_name }} ({{ post.lesson_type }})<br />
+                {{ post.lesson_week }}<br />
                 {{ post.lesson_time }}<br />
                 <a href="{% url 'DetailedPostView' post.pk %}">Jump to post</a>
                 </li>
