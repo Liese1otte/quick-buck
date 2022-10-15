@@ -1,24 +1,79 @@
 <!DOCTYPE html>
 <head>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+        * {
+            --bg-color: #d9e9ef;
+            --box-color: #a8d0de;
+            --login-color: #79adc0;
+            --note-color: #eadbb3;
+            margin: 0px;
+            padding: 0px;
+            font-family: 'Quicksand', sans-serif;
+            border: none;
+            outline: none;
+        }
+        body {
+            background-color: var(--bg-color);
+        }
+        div.interaction-box {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30%;
+            background-color: var(--box-color);
+            border-radius: 50px;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 20%);
+        }
+        div.login-icon {
+            margin: 50px;
+        }
         form.login {
             display: flex;
             flex-direction: column;
+        }
+        form.login > * {
+            margin: 0px 50px;
+            margin-bottom: 50px;
+            padding: 10px;
+            border-radius: 20px;
+        }
+        input:focus, input[type="submit"]:hover {
+            filter: brightness(90%);
+        }
+        input[type="submit"] {
+            background-color: var(--login-color);
+        }
+        div.note-box {
+            width: 50%;
+            margin: 20px auto;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--note-color);
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
     {% if messages %}
         {% for message in messages %}
-            {{ message }}
+            <div class="note-box">
+                {{ message }}
+            </div>
         {% endfor %}
     {% endif %}
-    <form class="login" method="POST">
-        {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" name="usr" />
-        <label for="password">Password:</label>
-        <input type="text" name="pwd" />
-        <input type="submit" value="Login" />
-    </form>
+    <div class="interaction-box">
+        <div class="login-icon"></div> 
+        <form class="login" method="POST">
+            {% csrf_token %}
+            <input type="text" name="usr" placeholder="Username" />
+            <input type="text" name="pwd" placeholder="Password "/>
+            <input type="submit" value="LOGIN" />
+        </form>
+    </div>
 </body>

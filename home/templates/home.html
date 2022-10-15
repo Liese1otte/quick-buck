@@ -1,17 +1,76 @@
 <!DOCTYPE html>
-<head> </head>
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+        * {
+            --bg-color: #d9e9ef;
+            --box-color: #a8d0de;
+            --note-color: #eadbb3;
+            margin: 0px;
+            padding: 0px;
+            font-family: 'Quicksand', sans-serif;
+            border: none;
+            outline: none;
+        }
+        body {
+            background-color: var(--bg-color);
+        }
+        div.interaction-box {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30%;
+            background-color: var(--box-color);
+            border-radius: 50px;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 20%);
+        }
+        div.interaction-box > a {
+            display: block;
+            margin-inline: 50px;
+            margin-bottom: 50px;
+            padding: 20px;
+            background: white;
+            text-align: center;
+            border-radius: 50px;
+            color: black;
+            text-decoration: none;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 10%);
+        }
+        div.interaction-box > a:hover {
+            filter: brightness(90%);
+        }
+        div.home-icon {
+            margin: 50px;
+        }
+        div.note-box {
+            width: 50%;
+            margin: 20px auto;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--note-color);
+            border-radius: 10px;
+        }
+    </style>
+</head>
 <body>
     {% if messages %}
         {% for message in messages %}
-            {{ message }}
+            <div class="note-box">{{ message }}</div>
         {% endfor %}
     {% endif %}
-    <h1>Home</h1>
-    {% if user.is_authenticated %}
-        <a href="posts/">Posts</a>
-        <a href="users/user_logout">Logout thingy</a>
-    {% else %}
-        <a href="users/user_login">Login thingy</a>
-        <a href="users/user_register">Register thingy</a>
-    {% endif %}
+    <div class="interaction-box">
+        <div class="home-icon"></div>
+        {% if user.is_authenticated %}
+        <a href="posts/">SCHEDULE</a>
+        <a href="users/user_logout">LOGOUT</a>
+        {% else %}
+        <a href="users/user_login">LOGIN</a>
+        <a href="users/user_register">REGISTER</a>
+        {% endif %}
+    </div>
 </body>
