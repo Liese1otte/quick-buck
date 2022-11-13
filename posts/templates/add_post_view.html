@@ -1,10 +1,70 @@
 <!DOCTYPE html>
-<head></head>
+<head>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
+        * {
+            --bg-color: #d9e9ef;
+            --box-color: #a8d0de;
+            --note-color: #eadbb3;
+            --post-color: #79adc0;
+            margin: 0px;
+            padding: 0px;
+            font-family: "Quicksand", sans-serif;
+            border: none;
+            outline: none;
+        }
+        body {
+            background-color: var(--bg-color);
+        }
+        div.action-box {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 50%;
+            height: 75%;
+            background-color: var(--box-color);
+            transform: translate(-50%, -50%);
+            border-radius: 50px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 20%);
+        }
+        button.post {
+            position: absolute;
+            bottom: 50px;
+            width: calc(100% - 100px);;
+            padding: 20px;
+            border-radius: 50px;
+            background-color: white;
+        }
+        button.post:hover {
+            filter: brightness(90%);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            padding: 50px;
+        }
+        form > input, select {
+            margin-bottom: 20px;
+            padding-block: 10px;
+            background-color: white;
+            border-radius: 20px;
+        }
+        input[type="checkbox"] {
+            flex: 0 0;
+        }
+    </style>
+</head>
 <body>
-    <h1>Add post</h1>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button>Post</button>
-    </form>
+    <div class="action-box">
+        <form method="POST">
+            {% csrf_token %}
+            Teacher: {{ form.teacher }} <br />
+            Lesson subject: {{ form.lesson_type }} <br />
+            Lesson name: {{ form.lesson_name }} <br />
+            Lesson week day: {{ form.lesson_week }} <br />
+            Lesson time: {{ form.lesson_time }} <br />
+            Lesson payment: {{ form.payment_status }} <br />
+            <button class="post">Post</button>
+        </form>
+    </div>
 </body>

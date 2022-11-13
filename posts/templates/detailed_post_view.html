@@ -1,21 +1,90 @@
 <!DOCTYPE html>
-<head></head>
+<head>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
+        * {
+            --bg-color: #d9e9ef;
+            --box-color: #a8d0de;
+            --note-color: #eadbb3;
+            --post-color: #79adc0;
+            margin: 0px;
+            padding: 0px;
+            font-family: "Quicksand", sans-serif;
+            border: none;
+            outline: none;
+        }
+        body {
+            background-color: var(--bg-color);
+        }
+        div.action-box {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 50%;
+            height: 50%;
+            padding: 50px;
+            background-color: var(--box-color);
+            transform: translate(-50%, -50%);
+            border-radius: 50px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 20%);
+        }
+        div.action-box > h2, p {
+            margin-bottom: 20px;
+        }
+        div.button-box {
+            display: flex;
+            position: absolute;
+            flex-direction: row;
+            width: calc(100% - 100px);
+            bottom: 50px;
+        }
+        div.button-box > a {
+            flex: 1;
+            display: block;
+            padding: 20px;
+            background: white;
+            text-align: center;
+            border-radius: 50px;
+            color: black;
+            text-decoration: none;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 10%);
+        }
+        div.button-box > .first-child {
+            margin-right: 50px;
+        }
+        div.button-box > *:hover {
+            filter: brightness(90%);
+        }
+        a {
+            color: black;
+        }
+    </style>
+</head>
 <body>
-    <h1>Post</h1>
-    {% if user.id == post.teacher.id %}
-        <a href="{% url 'EditPostView' post.pk %}">Edit</a>
-        <a href="{% url 'DeletePostView' post.pk %}">Delete</a>
-    {% endif %}
-    <h2>{{ post.lesson_name }}</h2>
-    <p>
-        {{ post.lesson_type }}<br />
-        {{ post.teacher }} / 
-        {% for student in post.students.all %}
-            {{ student }},
-        {% endfor %}
-        <br />
-        {{ post.lesson_time }}<br />
-        {{ post.payment_status }}
-    </p>
-    <a href="{% url 'PostsView' %}">Back</a>
+    <div class="action-box">
+        {% if user.id == post.teacher.id %}
+            <div class="button-box">
+                <a class="first-child" href="{% url 'EditPostView' post.pk %}">Edit</a>
+                <a href="{% url 'DeletePostView' post.pk %}">Delete</a>
+            </div>
+        {% endif %}
+        <h2>{{ post.lesson_name }}</h2>
+        <p>
+            {{ post.lesson_type }}<br />
+            {{ post.teacher }} / 
+            {% for student in post.students.all %}
+                {{ student }},
+            {% endfor %}
+            <br />
+            {{ post.lesson_time }}<br />
+            {% if post.payment_status == False %}
+                Not payed yet
+            {% else %}
+                Payed
+            {% endif %}
+        </p>
+        <a href="{% url 'PostsView' %}">BACK</a>
+    </div>
 </body>

@@ -1,15 +1,60 @@
 <!DOCTYPE html>
-<head></head>
+<head>
+   <style>
+        @import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
+        * {
+            --bg-color: #d9e9ef;
+            --box-color: #a8d0de;
+            --note-color: #eadbb3;
+            --post-color: #79adc0;
+            margin: 0px;
+            padding: 0px;
+            font-family: "Quicksand", sans-serif;
+            border: none;
+            outline: none;
+        }
+        body {
+            background-color: var(--bg-color);
+        }
+        div.action-box {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 50%;
+            height: 10%;
+            padding: 50px;
+            text-align: center;
+            background-color: var(--box-color);
+            transform: translate(-50%, -50%);
+            border-radius: 50px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 20%);
+        }
+        div.action-box > * {
+            margin-bottom: 20px;
+        }
+        button.post {
+            width: calc(100% - 100px);;
+            padding: 20px;
+            border-radius: 50px;
+            background-color: white;
+        }
+        button.post:hover {
+            filter: brightness(90%);
+        }
+   </style> 
+</head>
 <body>
-    <h1>Delete post</h1>
-    <h3>
-        Delete: {{ post.lesson_name }} | {{ post.teacher }} / 
-        {% for student in post.students.all %}
-            {{ student }},
-        {% endfor %}
-    </h3>
-    <form method="POST">
-        {% csrf_token %}
-        <button>Delete</button>
-    </form>
+    <div class="action-box">
+        <h3>
+            Delete: {{ post.lesson_name }} | {{ post.teacher }} / 
+            {% for student in post.students.all %}
+                {{ student }},
+            {% endfor %}
+            ?
+        </h3>
+        <form method="POST">
+            {% csrf_token %}
+            <button class="post">Delete</button>
+        </form>
+    </div>
 </body>

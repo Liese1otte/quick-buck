@@ -1,27 +1,185 @@
 <!DOCTYPE html>
-<head> </head>
+<head>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
+        * {
+            --bg-color: #d9e9ef;
+            --box-color: #a8d0de;
+            --note-color: #eadbb3;
+            --post-color: #79adc0;
+            margin: 0px;
+            padding: 0px;
+            font-family: "Quicksand", sans-serif;
+            border: none;
+            outline: none;
+        }
+        body {
+            background-color: var(--bg-color);
+        }
+        div.interaction-box {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: calc(75% - 100px);
+            height: calc(75% - 100px);
+            padding: 50px;
+            background-color: var(--box-color);
+            border-radius: 50px;
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 20%);
+        }
+        div.link-box {
+            display: flex;
+            position: absolute;
+            flex-direction: row;
+            width: calc(100% - 100px);
+            bottom: 50px;
+        }
+        div.link-box > a {
+            flex: 1;
+            display: block;
+            padding: 20px;
+            background: white;
+            text-align: center;
+            border-radius: 50px;
+            color: black;
+            text-decoration: none;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 10%);
+        }
+        a.new-post {
+            margin-right: 50px;
+        }
+        div.link-box > a:hover {
+            filter: brightness(90%);
+        }
+        div.posts-box {
+            display: flex;
+            flex-direction: column;
+            overflow: scroll;
+            margin-bottom: 90px;
+        }
+        div.post-box {
+            width: calc(100% - 40px);
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: var(--post-color);
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 10%);
+        }
+        .hidden {
+            display: none;
+        }
+        a.jump-link {
+            color: black;
+        }
+        div.nav-box {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 20px;
+        }
+        button.nav-button {
+            flex: 1;
+            padding: 10px;
+            background-color: white;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 10%);
+        }
+        button.nav-button[dayId="0"] {
+            border-radius: 20px 0px 0px 20px;
+        }
+        button.nav-button[dayId="6"] {
+            border-radius: 0px 20px 20px 0px;
+        }
+        button.nav-button:hover {
+            filter: brightness(90%);
+        }
+        div.weekday-box {
+                flex-direction: row-reverse;
+        }
+    </style>
+</head>
 <body>
-    {{ post.students.all }}
-    <h1>Posts</h1>
-    {% if user.user_type == "0" %}
-        <a href="{% url 'AddPostView' %}">New Post</a>
-    {% endif %}
-    <a href="{% url 'home' %}">Back</a>
-    <ul>
-        {% for post in object_list %}
-            {% if user.id == post.teacher.id or user in post.students.all %}
-                <li>
-                {{ post.teacher }} / 
-                {% for student in post.students.all %}
-                    {{ student }},
-                {% endfor %}
-                <br />
-                {{ post.lesson_name }} ({{ post.lesson_type }})<br />
-                {{ post.lesson_week }}<br />
-                {{ post.lesson_time }}<br />
-                <a href="{% url 'DetailedPostView' post.pk %}">Jump to post</a>
-                </li>
+    <div class="interaction-box">
+        <div class="nav-box">
+            <button class="nav-button" dayId="0" onclick="switchDay(event)">
+                MONDAY
+            </button>
+            <button class="nav-button" dayId="1" onclick="switchDay(event)">
+                TUESDAY
+            </button>
+            <button class="nav-button" dayId="2" onclick="switchDay(event)">
+                WEDNESDAY
+            </button>
+            <button class="nav-button" dayId="3" onclick="switchDay(event)">
+                THURSDAY
+            </button>
+            <button class="nav-button" dayId="4" onclick="switchDay(event)">
+                FRIDAY
+            </button>
+            <button class="nav-button" dayId="5" onclick="switchDay(event)">
+                SATURDAY
+            </button>
+            <button class="nav-button" dayId="6" onclick="switchDay(event)">
+                SUNDAY
+            </button>
+        </div>
+        <div class="posts-box" id="postsBox">
+            {% for i in "0123456" %}
+                <div class="weekday-box hidden" id="{{ i }}">
+                    {% for post in object_list %}
+                        {% if post.lesson_week == i and user.id == post.teacher.id or user in post.students.all %}
+                            <div class="post-box">
+                                {{ post.teacher }} / 
+                                {% for student in post.students.all %}
+                                    {{ student }}, 
+                                {% endfor %}
+                                <br />
+                                {{ post.lesson_name }} ({{ post.lesson_type }}),<br />
+                                {{ post.lesson_time }}<br />
+                                <br />
+                                <a href="{% url 'DetailedPostView' post.pk %}" class="jump-link">JUMP TO POST</a>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="link-box">
+            {% if user.user_type == "0" %}
+            <a href="{% url 'AddPostView' %}" class="new-post">NEW POST</a>
             {% endif %}
-        {% endfor %}
-    </ul>
+            <a href="{% url 'home' %}">BACK</a>
+        </div>
+    </div>
+    <script>
+        function switchDay(event) {
+            let dayId = event.target.getAttribute("dayId");
+            let dayDivs = document.querySelectorAll("#postsBox > div");
+            for (let i = 0; i < dayDivs.length; i++) {
+                if (dayDivs[i].id != dayId) {
+                    addClass(dayDivs[i], "hidden");
+                } else {
+                    removeClass(dayDivs[i], "hidden");
+                }
+                if (!dayDivs[i].children[0].children.length) {
+                    dayDivs[i].style.display = "none";
+                }
+            }
+        }
+        function hasClass(ele,cls) {
+            return !!ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+        }
+
+        function addClass(ele,cls) {
+            if (!hasClass(ele,cls)) ele.className += " "+cls;
+        }
+
+        function removeClass(ele,cls) {
+            if (hasClass(ele,cls)) {
+                var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
+                ele.className=ele.className.replace(reg,' ');
+            }
+        }
+    </script>
 </body>
