@@ -95,7 +95,7 @@
             filter: brightness(90%);
         }
         div.weekday-box {
-                flex-direction: row-reverse;
+            flex-direction: row-reverse;
         }
     </style>
 </head>
@@ -138,7 +138,11 @@
                                 {{ post.lesson_name }} ({{ post.lesson_type }}),<br />
                                 {{ post.lesson_time }}<br />
                                 <br />
-                                <a href="{% url 'DetailedPostView' post.pk %}" class="jump-link">JUMP TO POST</a>
+                                <a
+                                    href="{% url 'DetailedPostView' post.pk %}"
+                                    class="jump-link"
+                                    >JUMP TO POST</a
+                                >
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -157,28 +161,31 @@
             let dayId = event.target.getAttribute("dayId");
             let dayDivs = document.querySelectorAll("#postsBox > div");
             for (let i = 0; i < dayDivs.length; i++) {
+                console.log(dayDivs[i]);
                 if (dayDivs[i].id != dayId) {
                     addClass(dayDivs[i], "hidden");
                 } else {
                     removeClass(dayDivs[i], "hidden");
                 }
-                if (!dayDivs[i].children[0].children.length) {
+                if (!dayDivs[i].children) {
                     dayDivs[i].style.display = "none";
                 }
             }
         }
-        function hasClass(ele,cls) {
-            return !!ele.className.match(new RegExp('(\\s|^)'+cls+'(\\s|$)'));
+        function hasClass(ele, cls) {
+            return !!ele.className.match(
+                new RegExp("(\\s|^)" + cls + "(\\s|$)")
+            );
         }
 
-        function addClass(ele,cls) {
-            if (!hasClass(ele,cls)) ele.className += " "+cls;
+        function addClass(ele, cls) {
+            if (!hasClass(ele, cls)) ele.className += " " + cls;
         }
 
-        function removeClass(ele,cls) {
-            if (hasClass(ele,cls)) {
-                var reg = new RegExp('(\\s|^)'+cls+'(\\s|$)');
-                ele.className=ele.className.replace(reg,' ');
+        function removeClass(ele, cls) {
+            if (hasClass(ele, cls)) {
+                var reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
+                ele.className = ele.className.replace(reg, " ");
             }
         }
     </script>
