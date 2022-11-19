@@ -163,7 +163,6 @@
             let dayId = event.target.getAttribute("dayId");
             let dayDivs = document.querySelectorAll("#postsBox > div");
             for (let i = 0; i < dayDivs.length; i++) {
-                console.log(dayDivs[i]);
                 if (dayDivs[i].id != dayId) {
                     addClass(dayDivs[i], "hidden");
                 } else {
