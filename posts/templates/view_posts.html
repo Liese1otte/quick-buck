@@ -128,22 +128,24 @@
             {% for i in "0123456" %}
                 <div class="weekday-box hidden" id="{{ i }}">
                     {% for post in object_list %}
-                        {% if post.lesson_week == i and user.id == post.teacher.id or user in post.students.all %}
-                            <div class="post-box">
-                                {{ post.teacher }} / 
-                                {% for student in post.students.all %}
-                                    {{ student }}, 
-                                {% endfor %}
-                                <br />
-                                {{ post.lesson_name }} ({{ post.lesson_type }}),<br />
-                                {{ post.lesson_time }}<br />
-                                <br />
-                                <a
-                                    href="{% url 'DetailedPostView' post.pk %}"
-                                    class="jump-link"
-                                    >JUMP TO POST</a
-                                >
-                            </div>
+                        {% if post.lesson_week == i %}
+                            {% if user.id == post.teacher.id or user in post.students.all %}
+                                <div class="post-box">
+                                    {{ post.teacher }} / 
+                                    {% for student in post.students.all %}
+                                        {{ student }}, 
+                                    {% endfor %}
+                                    <br />
+                                    {{ post.lesson_name }} ({{ post.lesson_type }}),<br />
+                                    {{ post.lesson_time }}<br />
+                                    <br />
+                                    <a
+                                        href="{% url 'DetailedPostView' post.pk %}"
+                                        class="jump-link"
+                                        >JUMP TO POST</a
+                                    >
+                                </div>
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                 </div>
